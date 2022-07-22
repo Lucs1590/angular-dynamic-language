@@ -9,13 +9,13 @@ import { ApiService } from './api.service';
     <div>
       <h1 translate> mainPhrase </h1>
       <h2 translate> subPhrase </h2>
-      <button translate > buttonPhrase </button>
+      <button click (click)="changeLanguage()" translate> buttonPhrase </button>
     </div>
   `
 })
 
 export class AppComponent implements OnInit {
-
+  currentLanguage: string = 'en';
   constructor(
     private translate: TranslateService,
     private apiService: ApiService
@@ -32,7 +32,17 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang('en');
     if (ipInfo?.country_code?.toUpperCase() == 'BR') {
       this.translate.setDefaultLang('pt');
+      this.currentLanguage = 'pt';
     };
   }
 
+  changeLanguage(): void {
+    if (this.currentLanguage == 'en') {
+      this.translate.use('pt');
+      this.currentLanguage = 'pt';
+    } else {
+      this.translate.use('en');
+      this.currentLanguage = 'en';
+    }
+  }
 }
